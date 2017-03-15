@@ -3,6 +3,8 @@ using System.Web;
 using System.Web.Http;
 using System.Net.Http;
 using Microsoft.AspNet.Identity.Owin;
+using ASP.NET_Identity_with_WebAPI.Models;
+using ASP.NET_Identity_with_WebAPI.Infrastructure;
 
 namespace ASP.NET_Identity_with_WebAPI.Controllers
 {
@@ -64,3 +66,4 @@ namespace ASP.NET_Identity_with_WebAPI.Controllers
             return null;
         }
     }
+}
