@@ -20,6 +20,12 @@ namespace ASP.NET_Identity_with_WebAPI.Infrastructure
             var appDbContext = context.Get<ApplicationDbContext>();
             var appUserManager = new ApplicationUserManager(new UserStore<ApplicationUser>(appDbContext));
 
+            appUserManager.UserValidator = new UserValidator<ApplicationUser>(appUserManager)
+            {
+                AllowOnlyAlphanumericUserNames = true,
+                RequireUniqueEmail = true
+            };
+
             return appUserManager;
         }
     }
