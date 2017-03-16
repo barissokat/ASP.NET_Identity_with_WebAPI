@@ -26,6 +26,15 @@ namespace ASP.NET_Identity_with_WebAPI.Infrastructure
                 RequireUniqueEmail = true
             };
 
+            appUserManager.PasswordValidator = new PasswordValidator
+            {
+                RequiredLength = 6,
+                RequireNonLetterOrDigit = true,
+                RequireDigit = false,
+                RequireLowercase = true,
+                RequireUppercase = true,
+            };
+
             return appUserManager;
         }
     }
