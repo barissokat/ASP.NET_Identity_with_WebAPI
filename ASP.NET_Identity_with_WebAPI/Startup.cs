@@ -1,11 +1,15 @@
 ﻿using ASP.NET_Identity_with_WebAPI.Infrastructure;
 using ASP.NET_Identity_with_WebAPI.Providers;
 using Microsoft.Owin;
+using Microsoft.Owin.Security;
+using Microsoft.Owin.Security.DataHandler.Encoder;
+using Microsoft.Owin.Security.Jwt;
 using Microsoft.Owin.Security.OAuth;
 using Newtonsoft.Json.Serialization;
 using Owin;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Web;
@@ -20,6 +24,8 @@ namespace ASP.NET_Identity_with_WebAPI
             HttpConfiguration httpConfig = new HttpConfiguration();
 
             ConfigureOAuthTokenGeneration(app);
+
+            ConfigureOAuthTokenConsumption(app);
 
             ConfigureWebApi(httpConfig);
 
@@ -48,6 +54,26 @@ namespace ASP.NET_Identity_with_WebAPI
             // OAuth 2.0 Bearer Access Token Generation
             app.UseOAuthAuthorizationServer(OAuthServerOptions);
 
+        }
+
+        private void ConfigureOAuthTokenConsumption(IAppBuilder app)
+        {
+
+            var issuer = "http://localhost:51446";
+            string audienceId = ConfigurationManager.AppSettings["as:AudienceId"];
+            byte[] audienceSecret = TextEncodings.Base64Url.Decode(ConfigurationManager.AppSettings["as:AudienceSecret"]);
+
+            // Api controllers with an [Authorize] attribute will be validated with JWT
+            app.UseJwtBearerAuthentication(
+                new JwtBearerAuthenticationOptions
+                {
+                    AuthenticationMode = AuthenticationMode.Active,
+                    AllowedAudiences = new[] { audienceId },
+                    IssuerSecurityTokenProviders = new IIssuerSecurityTokenProvider[]
+                    {
+                        new SymmetricKeyIssuerSecurityTokenProvider(issuer, audienceSecret)
+                    }
+                });
         }
 
         private void ConfigureWebApi(HttpConfiguration config)
