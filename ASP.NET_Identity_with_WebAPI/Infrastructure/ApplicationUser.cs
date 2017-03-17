@@ -30,7 +30,6 @@ namespace ASP.NET_Identity_with_WebAPI.Infrastructure
         {
             var userIdentity = await manager.CreateIdentityAsync(this, authenticationType);
             // Add custom user claims here
-
             return userIdentity;
         }
     }
