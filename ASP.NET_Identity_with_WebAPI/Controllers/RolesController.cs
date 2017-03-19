@@ -1,15 +1,10 @@
-﻿using AspNetIdentity.WebApi.Infrastructure;
-using AspNetIdentity.WebApi.Models;
+﻿using ASP.NET_Identity_with_WebAPI.Controllers;
+using ASP.NET_Identity_with_WebAPI.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
-using System.Web.Http.ModelBinding;
 
 namespace AspNetIdentity.WebApi.Controllers
 {
