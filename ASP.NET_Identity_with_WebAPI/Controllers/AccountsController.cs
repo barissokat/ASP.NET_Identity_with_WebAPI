@@ -11,14 +11,14 @@ namespace ASP.NET_Identity_with_WebAPI.Controllers
     [RoutePrefix("api/accounts")]
     public class AccountsController : BaseApiController
     {
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("users")]
         public IHttpActionResult GetUsers()
         {
             return Ok(this.AppUserManager.Users.ToList().Select(u => this.TheModelFactory.Create(u)));
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}", Name = "GetUserById")]
         public async Task<IHttpActionResult> GetUser(string Id)
         {
@@ -33,7 +33,7 @@ namespace ASP.NET_Identity_with_WebAPI.Controllers
 
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("user/{username}")]
         public async Task<IHttpActionResult> GetUserByName(string username)
         {
@@ -98,7 +98,7 @@ namespace ASP.NET_Identity_with_WebAPI.Controllers
             return Ok();
         }
 
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         [Route("user/{id:guid}")]
         public async Task<IHttpActionResult> DeleteUser(string id)
         {
